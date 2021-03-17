@@ -10,9 +10,13 @@ import ua.com.alevel.util.HibernateSessionFactoryUtil;
 import java.util.List;
 
 public class ProductDao {
-    private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+    private static SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
 
-    public void createProduct(Product product){
+    public static void main(String[] args) {
+        System.out.println(getAllProducts());
+    }
+
+    public static void createProduct(Product product){
         try(Session session = sessionFactory.openSession()){
             session.beginTransaction();
             session.save(product);
@@ -22,22 +26,35 @@ public class ProductDao {
         }
     }
 
-    public void deleteProductWithCategory(String name){
+    public static void deleteProductWithCategory(String name){
         try (Session session = sessionFactory.openSession()) {
-            List<Product> categoryList = getProductsByCategoryName(name);
-            Integer idToDelete = null;
-            for (Product product : categoryList) {
-                idToDelete = product.getProductId();
+            CategoryDao categoryDao = new CategoryDao();
+            List<Category> categoryList = categoryDao.getAllCategories();
+            Category idToDelete = null;
+            for (Category category : categoryList) {
+                if (category.getCategoryName().equals(name)) {
+                    idToDelete = category;
+                }
             }
             session.beginTransaction();
-            Query query = session.createQuery("DELETE FROM Product WHERE productId =: idToDelete");
+            Query query = session.createQuery("DELETE FROM Product WHERE categoryId =: idToDelete");
             query.setParameter("idToDelete", idToDelete);
             query.executeUpdate();
             session.getTransaction().commit();
         }
     }
 
-    public List<Product> getAllProducts() {
+    public static void deleteProduct(Integer id){
+        try (Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM Product WHERE productId =: id");
+            query.setParameter("id", id);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        }
+    }
+
+    public static List<Product> getAllProducts() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Query<Product> query = session.createQuery("  FROM  Product ", Product.class);
@@ -47,7 +64,7 @@ public class ProductDao {
         }
     }
 
-    public List<Product> getProductsByCategoryName(String name) {
+    public static List<Product> getProductsByCategoryName(String name) {
         try (Session session = sessionFactory.openSession()) {
             CategoryDao categoryDao = new CategoryDao();
             List<Category> categoryList = categoryDao.getAllCategories();
@@ -66,7 +83,7 @@ public class ProductDao {
         }
     }
 
-    public void showProducts(){
+    public static void showProducts(){
         List<Product> categoryList = getAllProducts();
         for(Product product : categoryList){
             System.out.println(product + "\n");

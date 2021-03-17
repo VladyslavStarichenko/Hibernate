@@ -12,7 +12,7 @@
         <property name="price" column="price"/>
         <many-to-one name="categoryId" column="category_id"
                      class="ua.com.alevel.model.Category"
-                     cascade="save-update delete">
+                     cascade="save-update  delete ">
 
         </many-to-one>
     </class>

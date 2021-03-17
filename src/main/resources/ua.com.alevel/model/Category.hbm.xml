@@ -9,5 +9,6 @@
             <generator class="identity"/>
         </id>
         <property name="categoryName" column="category_name"/>
+
     </class>
 </hibernate-mapping>
