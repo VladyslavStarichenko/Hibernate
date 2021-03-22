@@ -16,6 +16,12 @@ public class Product {
                 '}';
     }
 
+    public Product(String productName, Integer price, Category categoryId) {
+        this.productName = productName;
+        this.price = price;
+        this.categoryId = categoryId;
+    }
+
     public Integer getProductId() {
         return productId;
     }

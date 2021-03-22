@@ -23,16 +23,6 @@ public class App {
         HelperCategory.methodsCategory(HelperCategory.suggestCategoryMethod());
     }
 
-//    private static Product createProductWithCategory() {
-//        Category category = new Category();
-//        category.setCategoryName("Protein");
-//
-//        Product product = new Product();
-//        product.setProductName("TestProteinProduct");
-//        product.setPrice(2111);
-//        product.setCategoryId(category);
-//
-//        return product;
-//    }
+
 
 }

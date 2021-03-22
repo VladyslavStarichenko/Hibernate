@@ -13,13 +13,13 @@ import java.util.Scanner;
 public class CategoryDao {
 
 
-
     private static SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
 
 
-    public static void createCategory(String categoryName, Category category) {
+
+    public static void createCategory(String categoryName, Category category,String massage) {
         if (checkCategoryExisting(categoryName)) {
-            System.out.println("The category with the passed name already exists");
+            System.out.println(massage);
         } else {
             categoryCreation(category);
         }
@@ -47,6 +47,16 @@ public class CategoryDao {
         return flag;
     }
 
+    public static void updateCategory(int categoryId, String newName) {
+        try (Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            Query query = session.createQuery("UPDATE Category SET categoryName =: newName WHERE id =: id");
+            query.setParameter("newName", newName);
+            query.setParameter("id", categoryId);
+            query.executeUpdate();
+            session.getTransaction().commit();
+        }
+    }
 
     public static List<Category> getAllCategories() {
         try (Session session = sessionFactory.openSession()) {
@@ -68,8 +78,11 @@ public class CategoryDao {
     }
 
     public static void deleteCategory(String name) {
-        if (checkCategoryBeforeDeleting(name) && deleteOrNot()) {
-            ProductDao.deleteProductWithCategory(name);
+        if (checkCategoryBeforeDeleting(name)) {
+            if(deleteOrNot()){
+                ProductDao.deleteProductWithCategory(name);
+            }
+
         }
         deletingCategory(name);
     }
@@ -89,8 +102,6 @@ public class CategoryDao {
         for (Product product : productList) {
             if (product.getCategoryId().getCategoryName().equals(name)) {
                 return true;
-            } else {
-                return false;
             }
         }
         return false;
@@ -99,7 +110,8 @@ public class CategoryDao {
     private static boolean deleteOrNot() {
         boolean flag = false;
         System.out.println("There are products with category you wanna delete." + "\n" +
-                "To perform this action enter 'Yes', to undo - enter 'No'");
+                "To perform this action enter 'Yes', to undo - enter 'No'" + "\n"+
+                "But firstly products with same category will be deleted");
         Scanner scanner = new Scanner(System.in);
         String response = scanner.nextLine();
         if (response.equals("Yes")) {
@@ -109,4 +121,6 @@ public class CategoryDao {
         }
         return flag;
     }
+
+
 }

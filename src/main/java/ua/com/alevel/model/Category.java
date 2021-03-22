@@ -5,6 +5,10 @@ public class Category {
     public Integer categoryId;
     public  String categoryName;
 
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     @Override
     public String toString() {
         return "Category{" +

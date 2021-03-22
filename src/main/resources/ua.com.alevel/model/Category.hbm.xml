@@ -5,9 +5,9 @@
 
 <hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping">
     <class name="ua.com.alevel.model.Category" table="category">
-        <id name="categoryId" column="category_id">
+        <id name="categoryId" column="category_id" >
             <generator class="identity"/>
-        </id>
+        </id >
         <property name="categoryName" column="category_name"/>
 
     </class>

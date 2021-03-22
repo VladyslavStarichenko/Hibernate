@@ -8,13 +8,18 @@ import java.util.Scanner;
 
 public class HelperCategory {
 
-    private static final String messageToCreate = "Enter the Category name to create one";
-    private static final String messageToDelete = "Enter the Category name to delete one";
-    private static final String messageToUpdate = "Enter the Category name to update one";
-    private static final String messageToGetOne = "Enter Category name to show it";
+    private static final String messageToCreate = "Enter the Category name to create";
+    private static final String messageToDelete = "Enter the Category name to delete";
+    private static final String messageToUpdate = "Enter the new Category name to update";
+    private static final String messageToGetId = "Enter Category id to update it";
 
     public static Category createCategoryModel(){
         String categoryName = getNameCategory(messageToCreate);
+        Category category = new Category();
+        category.setCategoryName(categoryName);
+        return category;
+    }
+    public static Category createCategoryModelWithName(String categoryName){
         Category category = new Category();
         category.setCategoryName(categoryName);
         return category;
@@ -41,18 +46,29 @@ public class HelperCategory {
             CategoryDao.showCategories();
             methodsCategory(suggestCategoryMethod());
         }else if(method.equals("Update")){
-
+            Integer idToUpdate = getIdToUpdate(messageToGetId);
+            String newName = getNameCategory(messageToUpdate);
+            CategoryDao.updateCategory(idToUpdate,newName);
             methodsCategory(suggestCategoryMethod());
         }else if(method.equals("Create")){
+            String message = "The category is already exist";
             Category category = createCategoryModel();
-            CategoryDao.createCategory(category.getCategoryName(),category);
+            CategoryDao.createCategory(category.getCategoryName(),category,message);
             methodsCategory(suggestCategoryMethod());
         }else if(method.equals("Delete")){
             String categoryToDelete = getNameCategory(messageToDelete);
             CategoryDao.deleteCategory(categoryToDelete);
+            methodsCategory(suggestCategoryMethod());
         }else if(method.equals("Back")){
 
         }
+    }
+
+    private static Integer getIdToUpdate(String message) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System.in);
+        Integer id = scanner.nextInt();
+        return id;
     }
 
 }

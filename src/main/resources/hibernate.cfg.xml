@@ -13,6 +13,8 @@
                 <property name="show_sql">true</property>
                 <mapping resource="ua.com.alevel/model/Category.hbm.xml"/>
                 <mapping resource="ua.com.alevel/model/Product.hbm.xml"/>
+                <mapping resource="ua.com.alevel/model/User.hbm.xml"/>
+                <mapping resource="ua.com.alevel/model/Order.hbm.xml"/>
             </session-factory>
         </hibernate-configuration>
 
