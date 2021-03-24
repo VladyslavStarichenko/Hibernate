@@ -8,6 +8,14 @@ public class User {
     Integer post_code;
     String email;
 
+    public User(String name, String last_name, String address, Integer post_code, String email) {
+        this.name = name;
+        this.last_name = last_name;
+        this.address = address;
+        this.post_code = post_code;
+        this.email = email;
+    }
+
     public Integer getUser_id() {
         return user_id;
     }

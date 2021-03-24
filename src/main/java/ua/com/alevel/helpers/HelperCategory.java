@@ -34,7 +34,7 @@ public class HelperCategory {
 
 
     public static String suggestCategoryMethod() {
-        System.out.println("Here you can Create, Read, Update and Delete Categories or press Finish to Exit the App");
+        System.out.println("Here you can Create, Read, Update and Delete Categories or enter Back to return to the main menu");
         System.out.println("Enter the method you wanna do.");
         Scanner scanner = new Scanner(System.in);
         String method = scanner.nextLine();
@@ -60,7 +60,7 @@ public class HelperCategory {
             CategoryDao.deleteCategory(categoryToDelete);
             methodsCategory(suggestCategoryMethod());
         }else if(method.equals("Back")){
-
+            HelperApp.methodsApp(HelperApp.appSuggestion());
         }
     }
 

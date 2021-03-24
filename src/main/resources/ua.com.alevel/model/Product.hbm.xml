@@ -14,7 +14,7 @@
                      class="ua.com.alevel.model.Category"
                      cascade="save-update"
                      lazy="false"
-        fetch="select">
+                     fetch="select">
 
         </many-to-one>
 

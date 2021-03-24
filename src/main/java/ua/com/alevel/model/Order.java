@@ -3,11 +3,8 @@ package ua.com.alevel.model;
 import java.util.Date;
 
 public class Order {
+
     public Integer order_id;
-    public Integer product_id;
-    public Integer user_id;
-    public Date order_date;
-    public String orderStatus;
 
     @Override
     public String toString() {
@@ -28,19 +25,19 @@ public class Order {
         this.order_id = order_id;
     }
 
-    public Integer getProduct_id() {
+    public Product getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(Integer product_id) {
+    public void setProduct_id(Product product_id) {
         this.product_id = product_id;
     }
 
-    public Integer getUser_id() {
+    public User getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(Integer user_id) {
+    public void setUser_id(User user_id) {
         this.user_id = user_id;
     }
 
@@ -63,11 +60,15 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer order_id, Integer product_id, Integer user_id, Date order_date, String orderStatus) {
-        this.order_id = order_id;
+    public Order(Product product_id, User user_id, Date order_date, String orderStatus) {
         this.product_id = product_id;
         this.user_id = user_id;
         this.order_date = order_date;
         this.orderStatus = orderStatus;
     }
+
+    public Product product_id;
+    public User user_id;
+    public Date order_date;
+    public String orderStatus;
 }

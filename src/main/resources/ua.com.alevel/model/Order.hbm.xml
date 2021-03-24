@@ -5,10 +5,9 @@
 
 <hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping">
     <class name="ua.com.alevel.model.Order" table="orders">
-        <id name="order_id" column="order_id">
+        <id name="order_id">
             <generator class="identity"/>
         </id>
-
         <many-to-one name="product_id" column="product_id"
                      class="ua.com.alevel.model.Product"
                      cascade="save-update"

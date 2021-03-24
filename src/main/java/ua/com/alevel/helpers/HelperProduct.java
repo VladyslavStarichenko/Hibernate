@@ -8,7 +8,7 @@ import ua.com.alevel.model.Product;
 import java.util.List;
 import java.util.Scanner;
 
-public class ProductHelper {
+public class HelperProduct {
 
     private static final String messageToCreateName = "Enter the Product name to create";
     private static final String messageToDelete = "Enter the Product's id to delete";
@@ -54,7 +54,7 @@ public class ProductHelper {
 
 
     public static String suggestProductMethod() {
-        System.out.println("Here you can Create, Read, Update and Delete Products or press Finish to Exit the App");
+        System.out.println("Here you can Create, Read, Update and Delete Products or or enter Back to return to the main menu");
         System.out.println("Enter the method you wanna do.");
         Scanner scanner = new Scanner(System.in);
         String method = scanner.nextLine();
@@ -83,7 +83,7 @@ public class ProductHelper {
             ProductDao.deleteProduct(idToUpdate);
             methodsProduct(suggestProductMethod());
         }else if(method.equals("Back")){
-
+            HelperApp.methodsApp(HelperApp.appSuggestion());
         }
     }
 

@@ -4,21 +4,18 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import ua.com.alevel.helpers.HelperCategory;
-import ua.com.alevel.helpers.ProductHelper;
 import ua.com.alevel.model.Category;
 import ua.com.alevel.model.Product;
 import ua.com.alevel.util.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
-import static ua.com.alevel.helpers.ProductHelper.checkCategoryToCreateProduct;
+import static ua.com.alevel.helpers.HelperProduct.checkCategoryToCreateProduct;
 
 public class ProductDao {
     private static SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
 
-    public static void main(String[] args) {
-        updateProduct(24,"UpdateTesting", 221, "AbraCadabra");
-    }
+
 
     public static void createProduct(Product product){
         try(Session session = sessionFactory.openSession()){
@@ -44,16 +41,22 @@ public class ProductDao {
                 query.setParameter("newName",newName);
                 query.setParameter("newPrice", newPrice);
                 query.setParameter("category", categoryToSet);
-                query.executeUpdate();
+                int rows = query.executeUpdate();
                 session.getTransaction().commit();
+                if(rows > 0){
+                    System.out.println("Product is successfully updated");
+                }
             }else if(!CategoryDao.checkCategoryExisting(categoryName)){
                 CategoryDao.categoryCreation(HelperCategory.createCategoryModelWithName(categoryName));
                 query.setParameter("id", productId);
                 query.setParameter("newName",newName);
                 query.setParameter("newPrice", newPrice);
                 query.setParameter("category",categoryName);
-                query.executeUpdate();
+                int rows = query.executeUpdate();
                 session.getTransaction().commit();
+                if(rows > 0){
+                    System.out.println("Product is successfully updated");
+                }
 
             }
         }

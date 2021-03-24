@@ -16,8 +16,7 @@ public class CategoryDao {
     private static SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
 
 
-
-    public static void createCategory(String categoryName, Category category,String massage) {
+    public static void createCategory(String categoryName, Category category, String massage) {
         if (checkCategoryExisting(categoryName)) {
             System.out.println(massage);
         } else {
@@ -48,13 +47,16 @@ public class CategoryDao {
     }
 
     public static void updateCategory(int categoryId, String newName) {
-        try (Session session = sessionFactory.openSession()){
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("UPDATE Category SET categoryName =: newName WHERE id =: id");
             query.setParameter("newName", newName);
             query.setParameter("id", categoryId);
-            query.executeUpdate();
+            int rows = query.executeUpdate();
             session.getTransaction().commit();
+            if(rows > 0){
+                System.out.println("Category is successfully updated");
+            }
         }
     }
 
@@ -69,7 +71,6 @@ public class CategoryDao {
     }
 
 
-
     public static void showCategories() {
         List<Category> categoryList = getAllCategories();
         for (Category category : categoryList) {
@@ -79,10 +80,9 @@ public class CategoryDao {
 
     public static void deleteCategory(String name) {
         if (checkCategoryBeforeDeleting(name)) {
-            if(deleteOrNot()){
+            if (deleteOrNot()) {
                 ProductDao.deleteProductWithCategory(name);
             }
-
         }
         deletingCategory(name);
     }
@@ -110,7 +110,7 @@ public class CategoryDao {
     private static boolean deleteOrNot() {
         boolean flag = false;
         System.out.println("There are products with category you wanna delete." + "\n" +
-                "To perform this action enter 'Yes', to undo - enter 'No'" + "\n"+
+                "To perform this action enter 'Yes', to undo - enter 'No'" + "\n" +
                 "But firstly products with same category will be deleted");
         Scanner scanner = new Scanner(System.in);
         String response = scanner.nextLine();
